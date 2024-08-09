@@ -11,13 +11,8 @@ const manifest: ManifestTypeV3 = {
   description: pkg.description,
   icons: {
     '128': 'public/icon-128.png',
+    '48': 'public/icon-48.png',
   },
-  web_accessible_resources: [
-    {
-      resources: ['public/*', 'assets/*'],
-      matches: ['<all_urls>'],
-    },
-  ],
 };
 
 function getManifestV3(pageDirMap: { [x: string]: any }): ManifestTypeV3 {

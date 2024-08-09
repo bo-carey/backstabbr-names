@@ -11,12 +11,7 @@ const manifest: ManifestTypeV2 = {
   description: pkg.description,
   icons: {
     '128': 'public/icon-128.png',
-  },
-  web_accessible_resources: ['public/*', 'assets/*'],
-  browser_specific_settings: {
-    gecko: {
-      strict_min_version: '60.0',
-    },
+    '48': 'public/icon-48.png',
   },
 };
 
