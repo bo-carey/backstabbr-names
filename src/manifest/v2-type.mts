@@ -47,18 +47,17 @@ export interface ManifestTypeV2 {
       }
     | undefined;
   content_pack?: any;
-  content_scripts?:
-    {
-      matches: string[];
-      all_frames?: boolean;
-      css?: string[];
-      exclude_globs?: string[];
-      exclude_matches?: string[];
-      include_globs?: string[];
-      js?: string[];
-      match_about_blank?: boolean;
-      run_at?: "document_idle" | "document_start" | "document_end";
-    }[];
+  content_scripts?: {
+    matches: string[];
+    all_frames?: boolean;
+    css?: string[];
+    exclude_globs?: string[];
+    exclude_matches?: string[];
+    include_globs?: string[];
+    js?: string[];
+    match_about_blank?: boolean;
+    run_at?: 'document_idle' | 'document_start' | 'document_end';
+  }[];
   content_security_policy?: string;
   current_locale?: any;
   devtools_page?: string;
@@ -66,30 +65,27 @@ export interface ManifestTypeV2 {
     matches: string[];
     accepts_tls_channel_id?: boolean;
   };
-  file_browser_handlers?:
-    {
-      id: string;
-      default_title: string;
-      file_filters: string[];
-    }[];
+  file_browser_handlers?: {
+    id: string;
+    default_title: string;
+    file_filters: string[];
+  }[];
   homepage_url?: string;
   import?: boolean;
-  incognito?: "spanning" | "split" | "not_allowed";
-  input_components?:
-    {
-      id: string;
-      name: string;
-      description: string;
-      type: "ime" | "xkb";
-      layouts: string[];
-    }[];
+  incognito?: 'spanning' | 'split' | 'not_allowed';
+  input_components?: {
+    id: string;
+    name: string;
+    description: string;
+    type: 'ime' | 'xkb';
+    layouts: string[];
+  }[];
   key?: string;
   // minimum_chrome_version?: string;
-  nacl_modules?: 
-    {
-      path: string;
-      mime_type: "video/w+" | "audio/w+" | "application/w+";
-    }[];
+  nacl_modules?: {
+    path: string;
+    mime_type: 'video/w+' | 'audio/w+' | 'application/w+';
+  }[];
   oauth2?: {
     client_id?: string;
     scopes?: string[];
@@ -120,7 +116,7 @@ export interface ManifestTypeV2 {
     | undefined;
   requirements?:
     | {
-        "3D"?:
+        '3D'?:
           | {
               features?: string[] | undefined;
             }
@@ -169,4 +165,14 @@ export interface ManifestTypeV2 {
   update_url?: string | undefined;
   version_name?: string | undefined;
   web_accessible_resources?: string[] | undefined;
+  browser_specific_settings?: {
+    gecko?: {
+      id?: string | undefined;
+      strict_min_version?: string | undefined;
+      strict_max_version?: string | undefined;
+    };
+    edge?: {
+      extension_types?: string[] | undefined;
+    };
+  };
 }
