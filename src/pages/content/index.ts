@@ -13,7 +13,6 @@ const players = {
 
 const powerRegex = new RegExp(`(${powers.join('|')})`, 'g');
 const emPowerRegex = new RegExp(`<em>(${powers.join('|')})</em>`, 'g');
-let arePlayersSet = false;
 
 async function deferRetrieval<T>(
   callback: () => T,
@@ -35,6 +34,7 @@ async function deferRetrieval<T>(
 }
 
 function getPlayerNames(infoPanel: HTMLTableElement) {
+  const leftToSet = [...powers];
   let parentHeader: HTMLTableCellElement;
   infoPanel.querySelectorAll('th').forEach((header) => {
     if (header.textContent === 'Players') {
@@ -52,9 +52,10 @@ function getPlayerNames(infoPanel: HTMLTableElement) {
     const playerPower = listItem.textContent?.match(powerRegex)?.[0] as Power;
     const playerLink = player.href;
     if (!playerName || !playerPower) return console.error('playerName or playerPower not found');
+    leftToSet.splice(leftToSet.indexOf(playerPower), 1);
     players[playerPower] = { name: playerName, link: playerLink };
   });
-  arePlayersSet = true;
+  return leftToSet.length === 0;
 }
 
 let isAppendingOrders = false;
@@ -162,13 +163,18 @@ const getInfoPanel = async (): Promise<HTMLTableElement> => {
   });
 };
 
+let tryCounter = 0;
 async function init() {
   const infoPanel = await getInfoPanel();
 
-  await deferRetrieval(
-    () => getPlayerNames(infoPanel),
-    () => arePlayersSet
-  );
+  const doesHavePlayerNames = getPlayerNames(infoPanel);
+  if (!doesHavePlayerNames) {
+    console.error('Failed to get player names');
+    if (tryCounter++ < 5) {
+      window.setTimeout(init, 1000 * tryCounter);
+    }
+    return;
+  }
   appendPlayerNamesToOrders();
 
   // Initialize the MutationObserver
